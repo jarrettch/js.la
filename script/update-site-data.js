@@ -24,6 +24,11 @@ function updateCurrent (everything) {
   currentData.current.speakers = show.speakers
   currentData.current.sponsors = show.sponsors
 
+  var prevSponsors = Object.keys(everything.sponsors).map(key => everything.sponsors[key]).filter(key => key._announced === true)
+  var sponsors = prevSponsors.reduce((sponsors, sponsor) => {sponsors.push({name: sponsor.organization, logo: sponsor.logo, url: sponsor.link}); return sponsors } , [])
+  currentData.pastSponsors = sponsors
+  console.log(mySponsors)
+
   var target = path.join(__dirname, '../public/_data.json')
   fs.writeFileSync(target, JSON.stringify(currentData, null, 4))
 }
